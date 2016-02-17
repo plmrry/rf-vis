@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "dependencies": {
+    "highland": "^2.5.1",
+    "mongodb": "^2.1.7",
+    "osc-min": "^0.2.0",
+    "rx": "^4.0.7"
+  }
+}
