@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "nodemon server.coffee"
+  },
+  "dependencies": {
+    "d3": "^3.5.6",
+    "fastqueue": "^0.1.0",
+    "node-osc": "^1.1.0",
+    "osc": "^1.4.0",
+    "osc-min": "^0.2.0",
+    "rapid-queue": "^0.1.6",
+    "serialport": "git://github.com/ghostoy/node-serialport.git#nan1to2"
+  }
+}

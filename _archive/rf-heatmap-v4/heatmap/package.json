@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "dependencies": {
+    "three": "^0.72.0",
+    "underscore": "^1.8.3"
+  }
+}

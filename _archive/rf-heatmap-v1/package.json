@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "dependencies": {
+    "osc": "^1.3.0"
+  }
+}
