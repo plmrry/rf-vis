@@ -12,7 +12,8 @@ MAX_POINTS = 1e3
 #LOOKAT_OFFSET = 0
 
 watchFrequencies = [
-  98e6, 315e6, 433e6, 460e6, 700e6, 800e6, 850e6, 1700e6, 1900e6, 2140e6, 2437e6, 5250e6
+  98e6, 315e6, 433e6, 460e6, 700e6, 800e6,
+  850e6, 1700e6, 1900e6, 2140e6, 2437e6, 5250e6
 ]
 
 accessors =
@@ -142,7 +143,8 @@ initialize = () ->
 
   diff = d3.scale.linear().domain([0, 10]).range([0, 0.9]).clamp(true)
 
-  bandPointsFob = addColumn name, text, resize, width, left, fobMid, packets, diff
+  bandPointsFob =
+    addColumn name, text, resize, width, left, fobMid, packets, diff
 
   #–––––––––––––––––––––––––––––––––––––––––––––––––––– Band Cameras
 
@@ -160,7 +162,8 @@ initialize = () ->
   tmobMid = 2140e6
   diff = d3.scale.linear().domain([0, 10]).range([0, 0.9]).clamp(true)
 
-  bandPointsTmob = addColumn name, text, resize, width, left, tmobMid, packets, diff
+  bandPointsTmob =
+    addColumn name, text, resize, width, left, tmobMid, packets, diff
 
   #–––––––––––––––––––––––––––––––––––––––––––––––––––– Band Cameras
 
@@ -181,7 +184,7 @@ initialize = () ->
   cameraXfm = getCameraX animation, dims, fmMid
   cameraYfm = getCameraY animation, dims, fmMid
 
-  #–––––––––––––––––––––––––––––––––––––––––––––––––––– Fucking Scales
+  #–––––––––––––––––––––––––––––––––––––––––––––––––––– Scales
 
   xFoo = cameraXfob.combineLatest dims, resize
 
@@ -198,20 +201,24 @@ initialize = () ->
         .ticks(3)
         .tickFormat((d) -> d/1e8 + " MHz")
       d3.select(".c1.axis.z").call(axis)
-        .attr "transform", "translate(#{size.width * 0.30}, #{size.height * 0.66})"
+        .attr(
+          "transform",
+          "translate(#{size.width * 0.30}, #{size.height * 0.66})"
+        )
         .call (a) ->
           l = a.selectAll(".label").data([1])
           l.enter().append("text").text("Hertz")
             .classed "label", true
             .attr "transform", "translate(130, 40)"
-      #d3.select(".c2.axis.z").call(axis)
-        #.attr "transform", "translate(#{size.width * 0.31}, #{size.height * 0.76})"
       tempY = dims.y.scale.copy()
       axisY = d3.svg.axis().scale(tempZ1)
         .ticks(3)
         .tickFormat((d) -> d/1e8 + " dBm")
       d3.select(".axis.y").call(axisY)
-        .attr "transform", "translate(#{size.width * 0.07}, #{size.height * 0.66})"
+        .attr(
+          "transform",
+          "translate(#{size.width * 0.07}, #{size.height * 0.66})"
+        )
         .call (a) ->
           l = a.selectAll(".label").data([1])
           l.enter().append("text").text("Amplitude")
@@ -225,7 +232,10 @@ initialize = () ->
         .ticks(3)
         .tickFormat((d) -> d/1e9 + " GHz")
       d3.select(".c3.axis.z").call(axis3)
-        .attr "transform", "translate(#{size.width * 0.55}, #{size.height * 0.66})"
+        .attr(
+          "transform",
+          "translate(#{size.width * 0.55}, #{size.height * 0.66})"
+        )
 
       tempZ3 = dims.z.scale.copy()
       tempZ3.domain([fmMid-band, fmMid+band])
@@ -234,7 +244,10 @@ initialize = () ->
         .ticks(3)
         .tickFormat((d) -> d/1e6 + " MHz")
       d3.select(".c4.axis.z").call(axis4)
-        .attr "transform", "translate(#{size.width * 0.81}, #{size.height * 0.66})"
+        .attr(
+          "transform",
+          "translate(#{size.width * 0.81}, #{size.height * 0.66})"
+        )
 
     .subscribe()
 
@@ -282,8 +295,11 @@ initialize = () ->
   # Animation
   ###########################################
 
-  animation.withLatestFrom(
-      renderer, resize, cameraZ,
+  animation
+    .withLatestFrom(
+      renderer,
+      resize,
+      cameraZ,
       cameraYfob,
       cameraXfob,
       cameraYtmob,
@@ -291,7 +307,11 @@ initialize = () ->
       cameraYfm, cameraXfm
     )
     .subscribe (arr) ->
-      [ time, renderer, size, cameraZ, cameraYfob, cameraXfob, cameraYtmob, cameraXtmob, cameraYfm, cameraXfm ] = arr
+      [
+        time, renderer, size, cameraZ, cameraYfob, cameraXfob,
+        cameraYtmob, cameraXtmob, cameraYfm, cameraXfm
+      ] = arr
+      
       views[0].camera = nullCam
       views[1].camera = cameraZ
 
@@ -320,8 +340,22 @@ getCameraViews = (left, width, scene, animation, dims, mid) ->
   cX = getCameraX animation, dims, mid
   cY = getCameraY animation, dims, mid
   return [
-    { left: left, bottom: 0.25, width: width, height: 0.75, camera: cY, scene: scene }
-    { left: left, bottom: 0.00, width: width, height: 0.25, camera: cX, scene: scene }
+    {
+      left: left,
+      bottom: 0.25,
+      width: width,
+      height: 0.75,
+      camera: cY,
+      scene: scene
+    },
+    {
+      left: left,
+      bottom: 0.00,
+      width: width,
+      height: 0.25,
+      camera: cX,
+      scene: scene
+    }
   ]
 
 getBandViews = (left, width) ->
@@ -702,32 +736,34 @@ getBufferGeometry = (pointsGeom) ->
   return geom
 
 THREE.ShaderLib['donaldTrump'] = {
-	uniforms: {
-	  pointTexture: { type: "t", value: THREE.ImageUtils.loadTexture( "/spark1.png" ) }
-	},
-	vertexShader: [
-	  "attribute float alpha;"
-	  "attribute float size;"
-	  "varying float vAlpha;"
-	  "varying vec3 vColor;"
-		"void main() {",
-		  "vColor = color;"
-		  "vAlpha = alpha;"
-		  "gl_PointSize = size;"
-		  "vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );"
-			"gl_Position = projectionMatrix * mvPosition;"
-		"}"
-	].join( "\n" ),
-	fragmentShader: [
-	  "varying vec3 vColor;"
-	  "varying float vAlpha;"
-	  "uniform sampler2D pointTexture;"
-		"void main() {",
-			"gl_FragColor = vec4( vColor.rgb, vAlpha );",
-			"gl_FragColor = gl_FragColor * texture2D( pointTexture, gl_PointCoord );"
-		"}"
-	].join( "\n" )
-};
+  uniforms: {
+    pointTexture: {
+      type: "t", value: THREE.ImageUtils.loadTexture( "/spark1.png" )
+    }
+  },
+  vertexShader: [
+    "attribute float alpha;"
+    "attribute float size;"
+    "varying float vAlpha;"
+    "varying vec3 vColor;"
+    "void main() {",
+    "vColor = color;"
+      "vAlpha = alpha;"
+      "gl_PointSize = size;"
+      "vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );"
+      "gl_Position = projectionMatrix * mvPosition;"
+    "}"
+  ].join( "\n" ),
+  fragmentShader: [
+    "varying vec3 vColor;"
+    "varying float vAlpha;"
+    "uniform sampler2D pointTexture;"
+    "void main() {",
+      "gl_FragColor = vec4( vColor.rgb, vAlpha );",
+      "gl_FragColor = gl_FragColor * texture2D( pointTexture, gl_PointCoord );"
+    "}"
+  ].join( "\n" )
+}
 
 
   #timeAlphaScale = d3.scale.linear()
