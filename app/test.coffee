@@ -23,7 +23,7 @@ accessors =
 setTimeout (-> do initialize), 0
 
 initialize = () ->
-  console.log "Hello buddy."
+  console.log "Hello buddy man."
   main = d3.select('body').append('main')
 
   visContainer = main.append("div").classed("vis", true)
@@ -36,6 +36,7 @@ initialize = () ->
 
   packets = Rx.Observable
     .fromEvent socket, 'new packets'
+    # .do (p) -> console.log(p)
     # .do (p) ->
       # console.log Date.now() - p[0].date
     .bufferWithTime 100
@@ -186,7 +187,6 @@ initialize = () ->
 
   MOVE = 40
 
-
   Rx.Observable.fromEvent(window, 'click')
     .withLatestFrom resize, dims
     .do (arr) ->
@@ -198,25 +198,25 @@ initialize = () ->
         .ticks(3)
         .tickFormat((d) -> d/1e8 + " MHz")
       d3.select(".c1.axis.z").call(axis)
-        .attr "transform", "translate(#{size.width * 0.30}, #{size.height * 0.70})"
+        .attr "transform", "translate(#{size.width * 0.30}, #{size.height * 0.66})"
         .call (a) ->
           l = a.selectAll(".label").data([1])
           l.enter().append("text").text("Hertz")
             .classed "label", true
-            .attr "transform", "translate(144, 40)"
+            .attr "transform", "translate(130, 40)"
       #d3.select(".c2.axis.z").call(axis)
-        #.attr "transform", "translate(#{size.width * 0.31}, #{size.height * 0.96})"
+        #.attr "transform", "translate(#{size.width * 0.31}, #{size.height * 0.76})"
       tempY = dims.y.scale.copy()
       axisY = d3.svg.axis().scale(tempZ1)
         .ticks(3)
         .tickFormat((d) -> d/1e8 + " dBm")
       d3.select(".axis.y").call(axisY)
-        .attr "transform", "translate(#{size.width * 0.07}, #{size.height * 0.70})"
+        .attr "transform", "translate(#{size.width * 0.07}, #{size.height * 0.66})"
         .call (a) ->
           l = a.selectAll(".label").data([1])
           l.enter().append("text").text("Amplitude")
             .classed "label", true
-            .attr "transform", "translate(144, 40)"
+            .attr "transform", "translate(130, 40)"
 
       tempZ2 = dims.z.scale.copy()
       tempZ2.domain([tmobMid-band, tmobMid+band])
@@ -225,7 +225,7 @@ initialize = () ->
         .ticks(3)
         .tickFormat((d) -> d/1e9 + " GHz")
       d3.select(".c3.axis.z").call(axis3)
-        .attr "transform", "translate(#{size.width * 0.55}, #{size.height * 0.70})"
+        .attr "transform", "translate(#{size.width * 0.55}, #{size.height * 0.66})"
 
       tempZ3 = dims.z.scale.copy()
       tempZ3.domain([fmMid-band, fmMid+band])
@@ -234,7 +234,7 @@ initialize = () ->
         .ticks(3)
         .tickFormat((d) -> d/1e6 + " MHz")
       d3.select(".c4.axis.z").call(axis4)
-        .attr "transform", "translate(#{size.width * 0.81}, #{size.height * 0.70})"
+        .attr "transform", "translate(#{size.width * 0.81}, #{size.height * 0.66})"
 
     .subscribe()
 

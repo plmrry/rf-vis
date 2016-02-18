@@ -38,7 +38,7 @@ packets = Rx.Observable.fromEvent(udpServer, 'message')
 logger = (message) ->
   process.stdout.cursorTo(0)
   process.stdout.clearLine()
-  process.stdout.write(message.toString());
+  process.stdout.write(message.toString())
 
 # HTTP Server
 ##############################################################################
