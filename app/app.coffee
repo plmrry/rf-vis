@@ -265,7 +265,7 @@ initializeParticles = ->
   
   window.globalGeom = bufferGeom
   
-  shader = THREE.ShaderLib['donaldTrump']
+  shader = THREE.ShaderLib['dotShader']
   
   shaderMaterial = new THREE.ShaderMaterial
     uniforms: shader.uniforms
@@ -483,7 +483,7 @@ getBufferGeometry = (pointsGeom) ->
   
   return geom
   
-THREE.ShaderLib['donaldTrump'] = {
+THREE.ShaderLib['dotShader'] = {
 
 	uniforms: {
 	  pointTexture: { type: "t", value: THREE.ImageUtils.loadTexture( "/spark1.png" ) }  
